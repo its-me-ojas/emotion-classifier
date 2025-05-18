@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from emotion_classifier import predict_ensemble
@@ -7,15 +7,10 @@ import tempfile
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-
 # Ensure upload directory exists
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
-@app.route('/api/')
-def index():
-    return render_template('index.html')
 
 @app.route('/api/predict', methods=['POST'])
 def predict():
