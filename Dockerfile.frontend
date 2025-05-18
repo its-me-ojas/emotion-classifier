@@ -3,13 +3,13 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY audio-emotion-insights-hub/package.json audio-emotion-insights-hub/package-lock.json ./
+COPY audio-emotion-insights/package.json audio-emotion-insights/package-lock.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the frontend application
-COPY audio-emotion-insights-hub/ .
+COPY audio-emotion-insights/ .
 
 # Build the application
 RUN npm run build
