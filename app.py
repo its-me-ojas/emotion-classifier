@@ -7,6 +7,7 @@ import tempfile
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+
 # Ensure upload directory exists
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
