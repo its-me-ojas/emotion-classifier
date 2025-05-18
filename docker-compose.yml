@@ -38,12 +38,13 @@ services:
       - VITE_API_URL=http://localhost:5000
       - NODE_ENV=production
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:3000"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     restart: unless-stopped
+    command: sh -c "serve -s dist -l 3000 & sleep 10 && wait"
 
 networks:
   default:
