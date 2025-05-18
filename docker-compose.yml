@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./crema_model.keras:/app/crema_model.keras
+      - ./ravdess.keras:/app/ravdess.keras
+      - ./tess.keras:/app/tess.keras
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=0
+      - MAX_CONTENT_LENGTH=16777216
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      - VITE_API_URL=http://localhost:5000
+      - NODE_ENV=production
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+networks:
+  default:
+    name: emotion-classification-network 
