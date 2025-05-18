@@ -3,7 +3,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copy package files
-COPY audio-emotion-insights-hub/package*.json ./
+COPY audio-emotion-insights-hub/package.json audio-emotion-insights-hub/package-lock.json ./
 
 # Install dependencies
 RUN npm install
